@@ -12,6 +12,8 @@ listint_t *iteration_from_tail_to_head(listint_t **head, int index)
 
 	int i;
 
+	if (*head == NULL)
+		return (NULL);
 	for (i = 0; p != NULL; i++)
 	{
 		if (i == index)
@@ -43,6 +45,8 @@ int is_palindrome(listint_t **head)
 	for (i = 0; i < index / 2; i++)
 	{
 		tail = iteration_from_tail_to_head(head, index - i - 1);
+		if (tail == NULL || h == NULL)
+			return (0);
 		if (h->n != tail->n)
 			return (0);
 		h = h->next;
