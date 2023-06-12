@@ -1,8 +1,7 @@
 #!/usr/bin/python3
+#5-no_c.py
 def no_c(my_string):
-    str_list = [char for char in my_string]
-    for element in str_list:
-        if element == 'c' or element == 'C':
-            str_list.remove(element)
+    "prints string without character c and C"
+    str_list = [char for char in my_string if char != 'c' and char != 'C']
     new_str = ''.join(str_list)
-    return str(new_str)
+    return new_str
