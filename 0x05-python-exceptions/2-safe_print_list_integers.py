@@ -3,16 +3,16 @@
 def safe_print_list_integers(my_list=[], x=0):
     """prints the first x elements of a list and only integers"""
     count = 0
-    try:
-        for i in range(x):
-            if type(my_list[i]) != int:
-                continue
+    for i in range(x):
+        try:
+            if i == x - 1:
+                print("{:d}".format(my_list[i]))
             else:
-                if i == x - 1:
-                    print("{:d}".format(my_list[i]))
-                else:
-                    print("{:d}".format(my_list[i]), end="")
-                count += 1
-    except(IndexError, Exception):
-        print()
+                print("{:d}".format(my_list[i]), end="")
+            count += 1
+        except(ValueError, TypeError):
+            continue
+        except IndexError:
+            print()
+            break
     return count
