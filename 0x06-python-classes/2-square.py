@@ -2,6 +2,7 @@
 # 2-square.py
 """ class defination called square"""
 
+
 class Square:
     """a class Square that defines a square by
     Instantiation with optional size: def __init__(self, size=0):
