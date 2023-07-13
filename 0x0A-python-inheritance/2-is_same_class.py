@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 # 2-is_same_class.py
+"""function definition"""
+
 
 def is_same_class(obj, a_class):
     """returns True if the object is exactly an
