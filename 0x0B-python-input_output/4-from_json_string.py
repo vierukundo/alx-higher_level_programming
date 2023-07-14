@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # 4-from_json_string.py
-import json
 """deserialization function"""
+import json
 
 
 def from_json_string(my_str):

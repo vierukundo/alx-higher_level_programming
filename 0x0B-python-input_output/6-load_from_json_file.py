@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # 6-load_from_json_file.py
-import json
 """deserialization function"""
+import json
 
 
 def load_from_json_file(filename):
