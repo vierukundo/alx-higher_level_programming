@@ -42,3 +42,21 @@ a TypeError is raised.
     Traceback (most recent call last):
     TypeError: first_name must be a string
 
+::
+
+    >>> say_my_name("LeBron", ["Cavs", "Lakers", "Heat"])
+    Traceback (most recent call last):
+    TypeError: last_name must be a string
+
+::
+
+    >>> say_my_name({"LeBron": 6, "James": 23}, 7.7)
+    Traceback (most recent call last):
+    TypeError: first_name must be a string
+
+::
+
+    >>> say_my_name(None)
+    Traceback (most recent call last):
+    TypeError: first_name must be a string
+
