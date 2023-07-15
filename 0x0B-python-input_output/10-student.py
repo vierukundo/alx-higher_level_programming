@@ -25,7 +25,7 @@ class Student:
         Returns:
             dictionary representation
         """
-        if attrs == None:
+        if attrs is None:
             return self.__dict__
         else:
             new_dict = {}
