@@ -73,7 +73,7 @@ class Base:
                         instance = cls.create(**obj_dict)
                         instances_list.append(instance)
                 return instances_list
-        except FileNotFoundError:
+        except IOError:
             return []
 
     @classmethod
