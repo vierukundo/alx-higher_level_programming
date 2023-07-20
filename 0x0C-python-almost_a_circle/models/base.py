@@ -64,7 +64,7 @@ class Base:
         filename = str(cls.__name__) + ".json"
         try:
             with open(filename, "r", encoding="utf-8") as f:
-                dicts_list = json.load(f)
+                dicts_list = cls.from_json_string(f.read())
                 if dicts_list is None:
                     return []
                 instances_list = []
@@ -73,7 +73,7 @@ class Base:
                         instance = cls.create(**obj_dict)
                         instances_list.append(instance)
                 return instances_list
-        except IOError:
+        except FileNotFoundError:
             return []
 
     @classmethod
