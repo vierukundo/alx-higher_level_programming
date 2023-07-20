@@ -39,21 +39,6 @@ class Base:
                 objs_dictionary = [obj.to_dictionary() for obj in list_objs]
                 f.write(cls.to_json_string(objs_dictionary))
 
-    @classmethod
-    def save_to_file_csv(cls, list_objs):
-        """writes the csv string representation of list_objs to a file"""
-        filename = str(cls.__name__) + ".csv"
-        with open(filename, 'w', newline='') as csv_f:
-            writer = csv.writer(csv_f)
-            for obj in list_objs:
-                if cls.__name__ == "Rectangle":
-                    row = [obj.id, obj.width, obj.height, obj.x, obj.y]
-                elif cls.__name__ == "Square":
-                    row = [obj.id, obj.size, obj.x, obj.y]
-                else:
-                    raise ValueError("Invalid object")
-                writer.writerow(row)
-
     def from_json_string(json_string):
         """returns the list of the JSON string representation json_string"""
         if json_string is None or len(json_string) == 0:
@@ -65,9 +50,9 @@ class Base:
     def create(cls, **dictionary):
         """returns an instance with all attributes already set"""
         if cls.__name__ == 'Rectangle':
-            dummy = cls(2, 4, 1, 3, 1)
+            dummy = cls(2, 3, 5)
         elif cls.__name__ == 'Square':
-            dummy = cls(2, 3, 3, 1)
+            dummy = cls(2)
         else:
             raise ValueError("Invalid subclass")
         dummy.update(**dictionary)
@@ -80,7 +65,7 @@ class Base:
         try:
             with open(filename, "r", encoding="utf-8") as f:
                 dicts_list = json.load(f)
-                if not dicts_list:
+                if dicts_list is None:
                     return []
                 instances_list = []
                 for obj_dict in dicts_list:
@@ -92,21 +77,35 @@ class Base:
             return []
 
     @classmethod
+    def save_to_file_csv(cls, list_objs):
+        """writes the csv string representation of list_objs to a file"""
+        filename = str(cls.__name__) + ".csv"
+        with open(filename, 'w', newline='') as csv_f:
+            if cls.__name__ == "Rectangle":
+                fieldnames = ['id', 'width', 'height', 'x', 'y']
+            else:
+                fieldnames = ['id', 'size', 'x', 'y']
+            writer = csv.DictWriter(csv_f, fieldnames=fieldnames)
+            writer.writeheader()
+            for obj in list_objs:
+                writer.writerow(obj.to_dictionary())
+
+    @classmethod
     def load_from_file_csv(cls):
         """deserializes in CSV"""
         filename = str(cls.__name__) + ".csv"
         instances_list = []
         try:
             with open(filename, 'r', newline='') as csv_f:
-                reader = csv.reader(csv_f)
+                reader = csv.DictReader(csv_f)
                 for row in reader:
                     if cls.__name__ == "Rectangle":
-                        instance = cls.create(id=int(
-                            row[0]), width=int(row[1]), height=int(
-                                row[2]), x=int(row[3]), y=int(row[4]))
+                        instance = cls.create(id=int(row['id']), width=int(
+                            row['width']), height=int(row['height']), x=int(
+                                row['x']), y=int(row['y']))
                     elif cls.__name__ == "Square":
-                        instance = cls.create(id=int(row[0]), size=int(
-                            row[1]), x=int(row[2]), y=int(row[3]))
+                        instance = cls.create(id=int(row['id']), size=int(
+                            row['size']), x=int(row['x']), y=int(row['y']))
                     else:
                         raise ValueError("Base has no given subclass")
                     instances_list.append(instance)
