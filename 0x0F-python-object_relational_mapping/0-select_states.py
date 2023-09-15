@@ -1,8 +1,8 @@
 #!/usr/bin/python3
-import sys
-import MySQLdb
 """a Python library that provides an interface
 for interacting with MySQL databases"""
+import sys
+import MySQLdb
 
 
 if __name__ == "__main__":
