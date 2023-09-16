@@ -13,7 +13,7 @@ if __name__ == "__main__":
     session = Session()
 
     state = session.query(State).filter_by(
-            name = '{}'.format(sys.argv[4])).order_by(State.id).first()
+            name='{}'.format(sys.argv[4])).order_by(State.id).first()
 
     if state:
         print("{}".format(state.id))
