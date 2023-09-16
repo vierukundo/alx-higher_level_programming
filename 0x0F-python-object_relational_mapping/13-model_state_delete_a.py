@@ -15,7 +15,8 @@ if __name__ == "__main__":
     states_with_a = session.query(State).filter(
             State.name.like('%a%')).order_by(State.id).all()
 
-    for state in states_with_a:
-        session.delete(state)
+    if states_with_a:
+        for state in states_with_a:
+            session.delete(state)
         session.commit()
     session.close()
