@@ -16,11 +16,11 @@ if __name__ == "__main__":
             port=3306,
             user=username,
             passwd=password,
-            db=database_name,
-            charset="utf8")
+            db=database_name)
     cur = conn.cursor()
-    query = "SELECT * FROM states WHERE name LIKE BINARY '{}' ORDER BY id ASC"
-    cur.execute(query.format(state))
+    query = "SELECT * FROM states WHERE states.name \
+            LIKE BINARY %s ORDER BY id ASC"
+    cur.execute(query, (state,))
     states_rows = cur.fetchall()
     for state in states_rows:
         print(state)
