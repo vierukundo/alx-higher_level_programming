@@ -15,6 +15,7 @@ if __name__ == "__main__":
 
     try:
         response = requests.post(url, data=params)
+        response.raise_for_status()
         data = response.json()
         if data:
             user_id = data.get('id')
@@ -22,5 +23,5 @@ if __name__ == "__main__":
             print("[{}] {}".format(user_id, user_name))
         else:
             print("No result")
-    except requests.exceptions.JSONDecodeError:
-        print("Not a valid JSON")
+    except requests.exceptions.RequestException as e:
+        print("Not a valid JSON" if 'json' in str(e) else "No result")
