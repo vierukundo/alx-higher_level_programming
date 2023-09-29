@@ -23,5 +23,5 @@ if __name__ == "__main__":
             print("[{}] {}".format(user_id, user_name))
         else:
             print("No result")
-    except requests.exceptions.RequestException as e:
-        print("Not a valid JSON" if 'json' in str(e) else "No result")
+    except Exception:
+        print("Not a valid JSON")
