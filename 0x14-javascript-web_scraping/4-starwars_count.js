@@ -28,7 +28,5 @@ request(url, { json: true }, (error, response, body) => {
     }
 
     console.log(numOfMovies);
-  } else {
-    console.error('Request failed. Status code:', response.statusCode);
   }
 });
