@@ -1,5 +1,9 @@
 #!/usr/bin/node
-// script that prints all characters of a Star Wars movie
+
+const request = require('request');
+const util = require('util');
+
+const prequest = util.promisify(request);
 
 if (process.argv.length !== 3) {
   console.error('Invalid number of arguments!');
@@ -7,29 +11,28 @@ if (process.argv.length !== 3) {
 }
 
 const movieId = process.argv[2];
-const url = `https://swapi-api.alx-tools.com/api/films/${movieId}`; // Fix the URL formatting
-const request = require('request');
+const url = `https://swapi-api.alx-tools.com/api/films/${movieId}`;
 
-request(url, { json: true }, (error, response, body) => {
-  if (error) {
-    console.error(error);
-    return;
-  }
+(async () => {
+  try {
+    const filmResponse = await prequest({ url, json: true });
 
-  if (response.statusCode === 200) {
-    const charactersUrls = body.characters;
+    if (filmResponse && filmResponse.statusCode === 200) {
+      const characters = filmResponse.body.characters;
 
-    // Use a loop to request and print character names
-    charactersUrls.forEach((charUrl) => {
-      request(charUrl, { json: true }, (error, response, charBody) => {
-        if (error) {
-          console.error(error);
-          return;
+      for (const charUrl of characters) {
+        const charResponse = await prequest({ url: charUrl, json: true });
+
+        if (charResponse && charResponse.statusCode === 200) {
+          console.log(charResponse.body.name);
+        } else {
+          console.error(`Character request failed for URL: ${charUrl}`);
         }
-        console.log(charBody.name);
-      });
-    });
-  } else {
-    console.error('Request failed. Status code:', response.statusCode);
+      }
+    } else {
+      console.error('Film request failed.');
+    }
+  } catch (error) {
+    console.error(error);
   }
-});
+})();
